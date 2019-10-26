@@ -1,0 +1,189 @@
+*{
+	margin: 0px;
+	padding:0px;
+	box-sizing: border-box;
+}
+
+
+body{
+	font-family: 'Poppins', sans-serif;
+}
+button{
+	font-family: 'Poppins', sans-serif;	
+}
+header{
+	display: flex;
+	width: 90%;
+	margin:auto;
+	height: 17vh;
+	align-items: center;
+}
+.logo-container,.nav-links,.cart{
+	display: flex;
+}
+
+.logo-container{
+
+	flex:1;
+}
+.logo{
+	font-weight: 400;
+	margin:5px;
+}
+nav{
+	flex:2;
+}
+.nav-links{
+	justify-content: space-between;
+	list-style: none;
+
+}
+.nav-link{
+	color:	#6666ff;
+	font-size:18px;
+	text-decoration: none;
+}
+
+.nav-link:hover{
+	color:black;
+}
+
+.apresentacao{
+	display: flex;
+	width: 90%;
+	margin:auto;
+	min-height: 80vh;
+	align-items: center;
+}
+.introducao{
+	flex:1;
+}
+.intro-text h1{
+	font-size: 44px;
+	font-weight: 500;
+	background:linear-gradient(to right,#ff6666,#ff9999);
+	-webkit-background-clip:text;
+	-webkit-text-fill-color:transparent;
+}
+.intro-text p{
+	margin-top:5px;
+	font-size: 22px;
+	color:#585772;
+}
+.cta{
+	padding: 50px 0px 0px 0px;
+}
+.cta-cadastro{
+	border:2px solid  #3399ff;
+	background:transparent;
+	color: #3399ff;
+	width: 150px;
+	height: 50px;
+	cursor: pointer;
+	font-size: 16px;
+	border-radius: 5px;
+}
+.link-cadastrar{
+	text-decoration: none;
+	font-family: 'Poppins', sans-serif;	
+	color:white;
+}
+.link-login{
+	text-decoration: none;
+	font-family: 'Poppins', sans-serif;	
+	color:#3399ff;
+}
+.cta-login{
+	background: #3399ff;
+	width: 150px;
+	height: 50px;
+	cursor: pointer;
+	font-size: 16px;
+	border: none;
+	color: white;
+	margin: 30px 0px 0px 30px;
+	border-radius: 5px;
+}
+.link-login:hover{
+	color:#ff6666;
+}
+.link-cadastrar:hover{
+	color:#ff6666;
+}
+.cover{
+	height: 60vh;
+	flex:1;
+}
+.cover img{
+	height: 100%;
+	filter: drop-shadow(0px 5px 0px black);
+	animation: drop 1.5s ease;
+}
+.big-circle{
+	position: absolute;
+	top:0px;
+	right:0px;
+	z-index: -1;
+	opacity: 0.5;
+	height: 90%;
+}
+.medium-circle{
+	position: absolute;
+	top:30%;
+	right:30%;
+	z-index: -1;
+	opacity: 0.4;
+	height: 60%;
+}
+.small-circle{
+
+	position: absolute;
+	bottom:0%;
+	left:20%;
+	z-index: -1;
+}
+
+@keyframes drop{
+	0%{
+		opacity: 0%;
+		transform: translateY(-80px);
+	}
+	100%{
+		opacity: 1%;
+		transform: translateY(0px);
+	}
+}
+
+@media screen and (max-width: 800px){
+	.apresentacao{
+		flex-direction: column;
+	}
+	.introducao{
+		margin-top:5vh;
+		text-align: center;
+	}
+	.intro-text h1{
+		font-size: 30px;
+
+	}
+	.intro-text p{
+		font-size: 18px;
+	}
+	.cta{
+		padding:10px 0px 0px 0px;
+	}
+	.selectiona-banco{
+		bottom:5%;
+		right: 50%;
+		width: 50%;
+		transform: translate(50%,5%);
+	}
+	.cover img{
+		height: 80%;
+	}
+	.small-circle,
+	.medium-circle,
+	.big-circle{
+		opacity: 0.2;
+	}
+}
