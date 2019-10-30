@@ -46,6 +46,14 @@ CREATE TABLE DDI (
 ALTER TABLE DDI ADD CONSTRAINT PK_DDI PRIMARY KEY (idDDI);
 
 
+CREATE TABLE ModalidadeBancaria (
+ idModalidadeBancaria INT NOT NULL,
+ modalidadeBancaria VARCHAR(100)
+);
+
+ALTER TABLE ModalidadeBancaria ADD CONSTRAINT PK_ModalidadeBancaria PRIMARY KEY (idModalidadeBancaria);
+
+
 CREATE TABLE Pais (
  idPais INT NOT NULL,
  nomePais VARCHAR(100) NOT NULL
@@ -72,14 +80,6 @@ CREATE TABLE TipoFone (
 ALTER TABLE TipoFone ADD CONSTRAINT PK_TipoFone PRIMARY KEY (idTipoFone);
 
 
-CREATE TABLE TipoInvestimento (
- idTipoInvestimento INT NOT NULL,
- descricaoTipoInvestimento VARCHAR(100)
-);
-
-ALTER TABLE TipoInvestimento ADD CONSTRAINT PK_TipoInvestimento PRIMARY KEY (idTipoInvestimento);
-
-
 CREATE TABLE TipoLogradouro (
  idTipoLogradouro INT NOT NULL,
  siglaTipo VARCHAR(100),
@@ -87,22 +87,6 @@ CREATE TABLE TipoLogradouro (
 );
 
 ALTER TABLE TipoLogradouro ADD CONSTRAINT PK_TipoLogradouro PRIMARY KEY (idTipoLogradouro);
-
-
-CREATE TABLE TipoModalidadeContaBancaria (
- idTipoModalidadeContaBancaria INT NOT NULL,
- descricaoTipoModalidadeContaBancaria VARCHAR(100)
-);
-
-ALTER TABLE TipoModalidadeContaBancaria ADD CONSTRAINT PK_TipoModalidadeContaBancaria PRIMARY KEY (idTipoModalidadeContaBancaria);
-
-
-CREATE TABLE TipoTransacao (
- idTipoTransacao INT NOT NULL,
- descricaoTipoTransicao VARCHAR(100) NOT NULL
-);
-
-ALTER TABLE TipoTransacao ADD CONSTRAINT PK_TipoTransacao PRIMARY KEY (idTipoTransacao);
 
 
 CREATE TABLE UF (
@@ -195,7 +179,7 @@ CREATE TABLE ContaBancaria (
  idContaBancaria INT NOT NULL,
  saldoAtual FLOAT(1000),
  idCliente INT,
- idTipoModalidadeContaBancaria INT,
+ idModalidadeBancaria INT,
  idAgencia INT,
  idBanco INT
 );
@@ -224,29 +208,16 @@ CREATE TABLE FoneCliente (
 ALTER TABLE FoneCliente ADD CONSTRAINT PK_FoneCliente PRIMARY KEY (idFoneCliente);
 
 
-CREATE TABLE Investimento (
- idInvestimento INT NOT NULL,
- dataInvestimento DATE,
- valorInvestimento FLOAT(10),
+CREATE TABLE Transferencia (
+ idTransferencia INT NOT NULL,
+ dataTransferencia DATE,
+ motivoTransferencia VARCHAR(100) DEFAULT '010 Transferencia Bancaria',
+ valorTransferencia FLOAT(1000),
  idContaBancaria INT,
- idTipoInvestimento INT,
- idTipoTransacao INT
+ idContaBancaria_Favorecido INT
 );
 
-ALTER TABLE Investimento ADD CONSTRAINT PK_Investimento PRIMARY KEY (idInvestimento);
-
-
-CREATE TABLE Transacao (
- idTransacao INT NOT NULL,
- dataTransacao DATE,
- motivoTransacao VARCHAR(100) DEFAULT '010 Transferencia Bancaria',
- valorTransacao FLOAT(1000),
- idContaBancaria INT,
- idContaBancaria_Favorecido INT,
- idTipoTransacao INT
-);
-
-ALTER TABLE Transacao ADD CONSTRAINT PK_Transacao PRIMARY KEY (idTransacao);
+ALTER TABLE Transferencia ADD CONSTRAINT PK_Transferencia PRIMARY KEY (idTransferencia);
 
 
 CREATE TABLE AtividadeComercial_Cliente (
@@ -283,7 +254,7 @@ ALTER TABLE ClienteEmpresa ADD CONSTRAINT FK_ClienteEmpresa_0 FOREIGN KEY (idEnd
 
 
 ALTER TABLE ContaBancaria ADD CONSTRAINT FK_ContaBancaria_0 FOREIGN KEY (idCliente) REFERENCES Cliente (idCliente);
-ALTER TABLE ContaBancaria ADD CONSTRAINT FK_ContaBancaria_1 FOREIGN KEY (idTipoModalidadeContaBancaria) REFERENCES TipoModalidadeContaBancaria (idTipoModalidadeContaBancaria);
+ALTER TABLE ContaBancaria ADD CONSTRAINT FK_ContaBancaria_1 FOREIGN KEY (idModalidadeBancaria) REFERENCES ModalidadeBancaria (idModalidadeBancaria);
 ALTER TABLE ContaBancaria ADD CONSTRAINT FK_ContaBancaria_2 FOREIGN KEY (idAgencia) REFERENCES Agencia (idAgencia);
 ALTER TABLE ContaBancaria ADD CONSTRAINT FK_ContaBancaria_3 FOREIGN KEY (idBanco) REFERENCES Banco (idBanco);
 
@@ -297,14 +268,8 @@ ALTER TABLE FoneCliente ADD CONSTRAINT FK_FoneCliente_2 FOREIGN KEY (idDDD) REFE
 ALTER TABLE FoneCliente ADD CONSTRAINT FK_FoneCliente_3 FOREIGN KEY (idTipoFone) REFERENCES TipoFone (idTipoFone);
 
 
-ALTER TABLE Investimento ADD CONSTRAINT FK_Investimento_0 FOREIGN KEY (idContaBancaria) REFERENCES ContaBancaria (idContaBancaria);
-ALTER TABLE Investimento ADD CONSTRAINT FK_Investimento_1 FOREIGN KEY (idTipoInvestimento) REFERENCES TipoInvestimento (idTipoInvestimento);
-ALTER TABLE Investimento ADD CONSTRAINT FK_Investimento_2 FOREIGN KEY (idTipoTransacao) REFERENCES TipoTransacao (idTipoTransacao);
-
-
-ALTER TABLE Transacao ADD CONSTRAINT FK_Transacao_0 FOREIGN KEY (idContaBancaria) REFERENCES ContaBancaria (idContaBancaria);
-ALTER TABLE Transacao ADD CONSTRAINT FK_Transacao_1 FOREIGN KEY (idContaBancaria_Favorecido) REFERENCES ContaBancaria (idContaBancaria);
-ALTER TABLE Transacao ADD CONSTRAINT FK_Transacao_2 FOREIGN KEY (idTipoTransacao) REFERENCES TipoTransacao (idTipoTransacao);
+ALTER TABLE Transferencia ADD CONSTRAINT FK_Transferencia_0 FOREIGN KEY (idContaBancaria) REFERENCES ContaBancaria (idContaBancaria);
+ALTER TABLE Transferencia ADD CONSTRAINT FK_Transferencia_1 FOREIGN KEY (idContaBancaria_Favorecido) REFERENCES ContaBancaria (idContaBancaria);
 
 
 ALTER TABLE AtividadeComercial_Cliente ADD CONSTRAINT FK_AtividadeComercial_Cliente_0 FOREIGN KEY (idAtividadeComercial) REFERENCES AtividadeComercial (idAtividadeComercial);
