@@ -19,7 +19,7 @@ public class DAOBanco {
 		return banco;
 	}
 	
-	public ArrayList<Banco> obterTodasBancos(SQLConnector connector) throws Exception{
+	public ArrayList<Banco> obterTodosBancos(SQLConnector connector) throws Exception{
 		String query = "SELECT * FROM Banco;";
 		ResultSet result = connector.executeQuery(query);
 		
