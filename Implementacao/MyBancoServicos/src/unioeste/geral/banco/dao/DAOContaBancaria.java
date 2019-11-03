@@ -67,4 +67,33 @@ public class DAOContaBancaria {
 		return cb;
 	}
 	
+	public boolean validarContaBancaria_Favorecido(Cliente c, ContaBancaria cb, SQLConnector connector) throws Exception{
+		int id;
+		
+		if(c.getClienteEmpresa() != null) {
+			id = c.getClienteEmpresa().getIdPessoa();
+		}else {
+			id = c.getClientePessoa().getIdPessoa();
+		}
+		
+		String query = "SELECT * FROM ContaBancaria WHERE idContaBancaria = " +cb.getIdContaBancaria()
+			+ " AND idCliente = " + id + " AND idAgencia = " + cb.getAgencia().getIdAgencia() + " AND idBanco = " + cb.getBanco().getIdBanco();
+		
+		ResultSet result = connector.executeQuery(query);
+		result.next();
+		
+		if(result.getInt("idContaBancaria") == 0) {
+			return false;
+		}
+		
+		return true;
+		
+	}
+	
+	public ContaBancaria atualizarContaBancaria(ContaBancaria cb, SQLConnector connector) throws Exception{
+		String query = "UPDATE ContaBancaria SET saldoAtual = " + cb.getSaldoAtual() + " WHERE idContaBancaria = " + cb.getIdContaBancaria() + ";";
+		connector.executeUpdate(query);
+		return cb;
+	}
+	
 }

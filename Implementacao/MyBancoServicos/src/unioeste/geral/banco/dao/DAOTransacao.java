@@ -44,6 +44,12 @@ public class DAOTransacao {
 		
 		connector.executeUpdate(query);
 		
+		String query_id = "SELECT * FROM Transacao WHERE idTransacao = LAST_INSERT_ID();";
+		ResultSet result = connector.executeQuery(query_id);
+		result.next();
+		
+		t.setIdTransferencia(result.getInt("idTransacao"));
+		
 		return t;
 	}
 	

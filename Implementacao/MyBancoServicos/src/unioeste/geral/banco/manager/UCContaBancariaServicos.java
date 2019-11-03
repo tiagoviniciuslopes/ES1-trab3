@@ -37,6 +37,8 @@ public class UCContaBancariaServicos {
 			
 		}
 		
+		connector.close();
+		
 		return contaBancaria;
 	}
 }

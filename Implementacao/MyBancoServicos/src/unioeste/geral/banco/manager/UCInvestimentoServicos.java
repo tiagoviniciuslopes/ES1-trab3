@@ -23,6 +23,8 @@ public class UCInvestimentoServicos {
 			i.setTipoTransacao(colTipoTransacao.obterTipoTransacaoPorId(i.getTipoTransacao(), connector));
 		}
 		
+		connector.close();
+		
 		return investimento;
 	
 	}

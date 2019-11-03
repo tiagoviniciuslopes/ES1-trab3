@@ -5,10 +5,12 @@ import java.util.ArrayList;
 import unioeste.apoio.BD.SQLConnector;
 import unioeste.geral.banco.bo.Agencia;
 import unioeste.geral.banco.bo.Banco;
+import unioeste.geral.banco.bo.Cliente;
 import unioeste.geral.banco.bo.ContaBancaria;
 import unioeste.geral.banco.bo.Transacao;
 import unioeste.geral.banco.col.ColAgencia;
 import unioeste.geral.banco.col.ColBanco;
+import unioeste.geral.banco.col.ColCliente;
 import unioeste.geral.banco.col.ColContaBancaria;
 import unioeste.geral.banco.col.ColTipoTransacao;
 import unioeste.geral.banco.col.ColTransacao;
@@ -36,8 +38,41 @@ public class UCTransacaoServicos {
 			t.setContaBancaria(contaBancaria);
 		}
 		
+		connector.close();
+		
 		return transacao;
 	
+	}
+	
+	public Transacao inserirTransacao(Cliente c, ContaBancaria cb, Transacao t) throws Exception{
+		SQLConnector connector = new SQLConnector();
+		ColTransacao colTransacao = new ColTransacao();
+		ColCliente colCliente = new ColCliente();
+		ColContaBancaria colContaBancaria = new ColContaBancaria();
+		
+		if(c.getClienteEmpresa() != null) {
+			c = colCliente.obterClientePorCnpj(c, connector);
+		}else {
+			c = colCliente.obterClientePorCpf(c, connector);
+		}
+		
+		cb = colContaBancaria.obterContaBancariaPorId(cb, connector);
+		
+		if(!colContaBancaria.validarContaBancaria_Favorecido(c, t.getContaBancaria(), connector)) {
+			throw new Exception("Conta bancaria favorecida inválida!");
+		}else if(t.getValorTransferencia() <= 1.00){
+			throw new Exception("O valor da transação deve ser maior que 1 real");
+		}else  if(cb.getSaldoAtual() < t.getValorTransferencia()){
+			throw new Exception("Saldo insuficiente para realizar a transação");
+		}else {
+			colTransacao.inserirTransacao(cb, t, connector);
+			cb.setSaldoAtual(cb.getSaldoAtual() - t.getValorTransferencia());
+			colContaBancaria.atualizarContaBancaria(cb,connector);
+		}
+		
+		connector.close();
+		
+		return t;
 	}
 	
 }
