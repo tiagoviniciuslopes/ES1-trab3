@@ -8,5 +8,6 @@
 	<classpathentry kind="lib" path="C:/Users/Tiago/Desktop/trabs/ES1/ES1-trab3/Implementacao/MyBancoBO/MyBancoBO.jar"/>
 	<classpathentry kind="lib" path="C:/Users/Tiago/Desktop/trabs/ES1/ES1-trab3/Implementacao/MyEnderecoBO/MyEnderecoBO.jar"/>
 	<classpathentry kind="lib" path="C:/Users/Tiago/Desktop/trabs/ES1/ES1-trab3/Implementacao/MyEnderecoServicos/MyEnderecoServicos.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Tiago/Desktop/trabs/ES1/ES1-trab3/Implementacao/MyCommonServicos/MyCommonServicos.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

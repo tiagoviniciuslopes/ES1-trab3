@@ -12,4 +12,9 @@ public class ColContaBancaria {
 		DAOContaBancaria dao = new DAOContaBancaria();
 		return dao.obterContaBancariaPorCliente(c, connector);
 	}
+	
+	public ContaBancaria obterContaBancariaPorId(ContaBancaria cb, SQLConnector connector) throws Exception {
+		DAOContaBancaria dao = new DAOContaBancaria();
+		return dao.obterContaBancariaPorId(cb, connector);
+	}
 }

@@ -24,11 +24,9 @@ public class DAOCliente {
 		ResultSet result = connector.executeQuery(query);
 		result.next();
 		
-		cp.setCaminhoFoto(result.getString("caminhoFoto"));
 		CPF cpf = new CPF();
 		cpf.setNumeroDoc(result.getString("cpf"));
 		cp.setCpf(cpf);
-		cp.setDescricaoFoto(result.getString("descricaoFoto"));
 		DocIdentidade docIdentidade = new DocIdentidade();
 		docIdentidade.setNumeroDoc(result.getString("numeroDoc"));
 		docIdentidade.setDataExpedicao(result.getString("dataExpedicao"));
@@ -45,7 +43,7 @@ public class DAOCliente {
 		cp.setEnderecoEspecifico(enderecoEspecifico);
 		cp.setIdPessoa(result.getInt("idCliente"));
 		cp.setNomeAbreviado(result.getString("nomeAbreviadoCliente"));
-		//cp.setNomeCompleto(result.getString("nomeCompletoCliente"));
+		cp.setNomeCompleto(result.getString("nomeCompletoCliente"));
 		cp.setNomeMeio(result.getString("nomeMeioCliente"));
 		cp.setPrimeiroNome(result.getString("primeiroNomeCliente"));
 		cp.setUltimoNome(result.getString("ultimoNomeCliente"));
@@ -67,18 +65,9 @@ public class DAOCliente {
 		ResultSet result = connector.executeQuery(query);
 		result.next();
 		
-		ce.setCaminhoFoto(result.getString("caminhoFoto"));
 		CNPJ cnpj = new CNPJ();
 		cnpj.setNumeroDoc(result.getString("cnpj"));
 		ce.setCnpj(cnpj);
-		ce.setDescricaoFoto(result.getString("descricaoFoto"));
-		/*DocIdentidade docIdentidade = new DocIdentidade();
-		docIdentidade.setNumeroDoc(result.getString("numeroDoc"));
-		docIdentidade.setDataExpedicao(result.getString("dataExpedicao"));
-		OrgaoExpeditor orgaoExpeditor = new OrgaoExpeditor();
-		orgaoExpeditor.setIdOrgaoExpeditor(result.getInt("idOrgaoExpeditor"));
-		docIdentidade.setOrgaoExpeditor(orgaoExpeditor);
-		ce.setDocIdentidade(docIdentidade);*/
 		EnderecoEspecifico enderecoEspecifico = new EnderecoEspecifico();
 		enderecoEspecifico.setNumero(result.getInt("numero"));
 		enderecoEspecifico.setComplemento(result.getString("complemento"));
@@ -89,12 +78,6 @@ public class DAOCliente {
 		ce.setIdPessoa(result.getInt("idCliente"));
 		ce.setNomeAbreviado(result.getString("nomeAbreviadoCliente"));
 		ce.setNomeCompleto(result.getString("primeiroNomeCliente"));
-		/*cp.setNomeMeio(result.getString("nomeMeioCliente"));
-		cp.setPrimeiroNome(result.getString("primeiroNomeCliente"));
-		cp.setUltimoNome(result.getString("ultimoNomeCliente"));
-		Sexo sexo = new Sexo();
-		sexo.setIdSexo(result.getInt("idSexo"));
-		cp.setSexo(sexo);*/
 		
 		cliente.setClienteEmpresa(ce);
 		
@@ -149,10 +132,10 @@ public class DAOCliente {
 		
 		ClientePessoa cp = c.getClientePessoa();
 		
-		String query = "INSERT INTO Cliente (caminhoFoto,cpf,descricaoFoto,numeroDoc,dataExpedicao,idOrgaoExpeditor,"
+		String query = "INSERT INTO Cliente (nomeCompletoCliente,cpf,numeroDoc,dataExpedicao,idOrgaoExpeditor,"
 				+ "numero,complemento,idEndereco,nomeAbreviadoCliente,nomeMeioCliente,"
-				+ "primeiroNomeCliente,ultimoNomeCliente,idSexo) VALUES ('"+cp.getCaminhoFoto()+"',"
-				+ "'"+cp.getCpf().getNumeroDoc()+"','"+cp.getDescricaoFoto()+"','"+cp.getDocIdentidade().getNumeroDoc()+"',"
+				+ "primeiroNomeCliente,ultimoNomeCliente,idSexo) VALUES ('"+cp.getNomeCompleto()+"',"
+				+ "'"+cp.getCpf().getNumeroDoc()+"','"+cp.getDocIdentidade().getNumeroDoc()+"',"
 				+ cp.getDocIdentidade().getSQLData() + ","+ cp.getDocIdentidade().getOrgaoExpeditor().getIdOrgaoExpeditor() + "," + cp.getEnderecoEspecifico().getNumero() + ",'"+ cp.getEnderecoEspecifico().getComplemento() +"',"
 				+ cp.getEnderecoEspecifico().getEndereco().getIdEndereco() +",'"+ cp.getNomeAbreviado() +"',"
 				+ "'"+ cp.getNomeMeio() +"', '"+cp.getPrimeiroNome()+"','"+cp.getUltimoNome()+"',"+cp.getSexo().getIdSexo()+");";
@@ -169,10 +152,10 @@ public class DAOCliente {
 		
 		ClienteEmpresa ce = c.getClienteEmpresa();
 		
-		String query = "INSERT INTO Cliente (caminhoFoto,cnpj,descricaoFoto,"
+		String query = "INSERT INTO Cliente (cnpj,"
 				+ "numero,complemento,idEndereco,"
-				+ "primeiroNomeCliente) VALUES ('"+ce.getCaminhoFoto()+"',"
-				+ "'"+ce.getCnpj().getNumeroDoc()+"','"+ce.getDescricaoFoto()+"',"
+				+ "primeiroNomeCliente) VALUES (,"
+				+ "'"+ce.getCnpj().getNumeroDoc()+"',"
 				+ ce.getEnderecoEspecifico().getNumero() + ",'"+ ce.getEnderecoEspecifico().getComplemento() +"',"
 				+ ce.getEnderecoEspecifico().getEndereco().getIdEndereco() +", '"+ce.getNomeCompleto()+"');";
 		
@@ -186,8 +169,6 @@ public class DAOCliente {
 	
 	public ClientePessoa setClientePessoa(ClientePessoa cp, ResultSet result) throws Exception{	
 		
-		cp.setCaminhoFoto(result.getString("caminhoFoto"));
-		cp.setDescricaoFoto(result.getString("descricaoFoto"));
 		DocIdentidade docIdentidade = new DocIdentidade();
 		docIdentidade.setNumeroDoc(result.getString("numeroDoc"));
 		docIdentidade.setDataExpedicao(result.getString("dataExpedicao"));
@@ -204,7 +185,7 @@ public class DAOCliente {
 		cp.setEnderecoEspecifico(enderecoEspecifico);
 		cp.setIdPessoa(result.getInt("idCliente"));
 		cp.setNomeAbreviado(result.getString("nomeAbreviadoCliente"));
-		//cp.setNomeCompleto(result.getString("nomeCompletoCliente"));
+		cp.setNomeCompleto(result.getString("nomeCompletoCliente"));
 		cp.setNomeMeio(result.getString("nomeMeioCliente"));
 		cp.setPrimeiroNome(result.getString("primeiroNomeCliente"));
 		cp.setUltimoNome(result.getString("ultimoNomeCliente"));
@@ -217,9 +198,6 @@ public class DAOCliente {
 	}
 	
 	public ClienteEmpresa setClienteEmpresa(ClienteEmpresa ce, ResultSet result) throws Exception{
-		
-		ce.setCaminhoFoto(result.getString("caminhoFoto"));
-		ce.setDescricaoFoto(result.getString("descricaoFoto"));
 		EnderecoEspecifico enderecoEspecifico = new EnderecoEspecifico();
 		enderecoEspecifico.setNumero(result.getInt("numero"));
 		enderecoEspecifico.setComplemento(result.getString("complemento"));

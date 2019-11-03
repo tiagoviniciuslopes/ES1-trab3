@@ -46,4 +46,25 @@ public class DAOContaBancaria {
 		return contaBancaria;
 	}
 	
+	public  ContaBancaria obterContaBancariaPorId(ContaBancaria cb, SQLConnector connector) throws Exception{		
+		String query="SELECT * FROM ContaBancaria WHERE idContaBancaria = " + cb.getIdContaBancaria() + ";" ;
+		ResultSet result = connector.executeQuery(query);
+
+		result.next();
+		cb.setIdContaBancaria(result.getInt("idContaBancaria"));
+		Agencia a = new Agencia();
+		a.setIdAgencia(result.getInt("idAgencia"));
+		cb.setAgencia(a);
+		Banco b = new Banco();
+		b.setIdBanco(result.getInt("idBanco"));
+		cb.setBanco(b);
+		TipoModalidadeContaBancaria tmcb = new TipoModalidadeContaBancaria();
+		tmcb.setIdModalidadeContaBancaria(result.getInt("idTipoModalidadeContaBancaria"));
+		cb.setTipoModalidadeContaBancaria(tmcb);
+		cb.setSaldoAtual(result.getFloat("saldoAtual"));	
+		
+		
+		return cb;
+	}
+	
 }

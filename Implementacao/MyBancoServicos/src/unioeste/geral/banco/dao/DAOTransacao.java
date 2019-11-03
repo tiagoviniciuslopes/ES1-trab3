@@ -13,7 +13,7 @@ public class DAOTransacao {
 	public  ArrayList<Transacao> obterTransacaoPorContaBancaria(ContaBancaria cb, SQLConnector connector) throws Exception{
 		ArrayList<Transacao> transacao = new ArrayList<Transacao>();
 		
-		String query="SELECT * FROM Transacao WHERE idContaBancaria = " + cb.getIdContaBancaria()+ ";" ;
+		String query="SELECT * FROM Transacao WHERE idContaBancaria = " + cb.getIdContaBancaria()+ " OR IdContaBancaria_Favorecido = " + cb.getIdContaBancaria() + " ORDER BY idTransacao;" ;
 		ResultSet result = connector.executeQuery(query);
 
 		while(result.next()) {

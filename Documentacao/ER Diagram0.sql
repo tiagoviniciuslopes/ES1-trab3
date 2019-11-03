@@ -107,7 +107,7 @@ ALTER TABLE TipoTransacao ADD CONSTRAINT PK_TipoTransacao PRIMARY KEY (idTipoTra
 
 CREATE TABLE UF (
  idUF INT NOT NULL,
- siglaUF VARCHAR(10),
+ siglaUF VARCHAR(100),
  nomeUF VARCHAR(100) NOT NULL,
  idPais INT
 );
@@ -157,7 +157,7 @@ CREATE TABLE Cliente (
  idCliente INT NOT NULL,
  primeiroNomeCliente VARCHAR(100) NOT NULL,
  nomeMeioCliente VARCHAR(100),
- ultimoNomeCliente VARCHAR(0) NOT NULL,
+ ultimoNomeCliente VARCHAR(100),
  nomeAbreviadoCliente VARCHAR(100),
  nomeCompletoCliente CHAR(100),
  cpf VARCHAR(100),
@@ -173,27 +173,9 @@ CREATE TABLE Cliente (
 
 ALTER TABLE Cliente ADD CONSTRAINT PK_Cliente PRIMARY KEY (idCliente);
 
-
-CREATE TABLE ClienteEmpresa (
- idClienteEmpresa CHAR(10) NOT NULL,
- primeiroNomeEmpresa VARCHAR(10) NOT NULL,
- nomeMeioEmpresa VARCHAR(10),
- ultimoNomeEmpresa VARCHAR(10),
- nomeAbreviadoEmpresa CHAR(10),
- cnpj VARCHAR(10) NOT NULL,
- numero INT NOT NULL,
- complemento VARCHAR(10),
- idEndereco INT,
- caminhoFoto VARCHAR(10),
- descricaoFoto VARCHAR(10)
-);
-
-ALTER TABLE ClienteEmpresa ADD CONSTRAINT PK_ClienteEmpresa PRIMARY KEY (idClienteEmpresa);
-
-
 CREATE TABLE ContaBancaria (
  idContaBancaria INT NOT NULL,
- saldoAtual FLOAT(1000),
+ saldoAtual FLOAT,
  idCliente INT,
  idTipoModalidadeContaBancaria INT,
  idAgencia INT,
@@ -227,7 +209,7 @@ ALTER TABLE FoneCliente ADD CONSTRAINT PK_FoneCliente PRIMARY KEY (idFoneCliente
 CREATE TABLE Investimento (
  idInvestimento INT NOT NULL,
  dataInvestimento DATE,
- valorInvestimento FLOAT(10),
+ valorInvestimento FLOAT,
  idContaBancaria INT,
  idTipoInvestimento INT,
  idTipoTransacao INT
@@ -240,7 +222,7 @@ CREATE TABLE Transacao (
  idTransacao INT NOT NULL,
  dataTransacao DATE,
  motivoTransacao VARCHAR(100) DEFAULT '010 Transferencia Bancaria',
- valorTransacao FLOAT(1000),
+ valorTransacao FLOAT,
  idContaBancaria INT,
  idContaBancaria_Favorecido INT,
  idTipoTransacao INT
@@ -277,9 +259,6 @@ ALTER TABLE Endereco ADD CONSTRAINT FK_Endereco_2 FOREIGN KEY (idLogradouro) REF
 ALTER TABLE Cliente ADD CONSTRAINT FK_Cliente_0 FOREIGN KEY (idSexo) REFERENCES Sexo (idSexo);
 ALTER TABLE Cliente ADD CONSTRAINT FK_Cliente_1 FOREIGN KEY (idEndereco) REFERENCES Endereco (idEndereco);
 ALTER TABLE Cliente ADD CONSTRAINT FK_Cliente_2 FOREIGN KEY (idOrgaoExpeditor) REFERENCES OrgaoExpeditor (idOrgaoExpeditor);
-
-
-ALTER TABLE ClienteEmpresa ADD CONSTRAINT FK_ClienteEmpresa_0 FOREIGN KEY (idEndereco) REFERENCES Endereco (idEndereco);
 
 
 ALTER TABLE ContaBancaria ADD CONSTRAINT FK_ContaBancaria_0 FOREIGN KEY (idCliente) REFERENCES Cliente (idCliente);

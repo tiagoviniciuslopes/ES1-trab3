@@ -14,7 +14,7 @@ public class DAOTipoTransacao {
 		result.next();
 		
 		tipoTransacao.setIdTipoTransacao(result.getInt("idTipoTransacao"));
-		tipoTransacao.setDescricaoTransacao(result.getString("descricaoTipoTransacao"));
+		tipoTransacao.setDescricaoTransacao(result.getString("descricaoTipoTransicao"));
 	
 		return tipoTransacao;
 	}
@@ -28,7 +28,7 @@ public class DAOTipoTransacao {
 		while(result.next()) {
 			TipoTransacao tipoTransacao = new TipoTransacao();
 			tipoTransacao.setIdTipoTransacao(result.getInt("idTipoTransacao"));
-			tipoTransacao.setDescricaoTransacao(result.getString("descricaoTipoTransacao"));
+			tipoTransacao.setDescricaoTransacao(result.getString("descricaoTipoTransicao"));
 			
 			tt.add(tipoTransacao);
 			
